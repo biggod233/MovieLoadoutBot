@@ -64,5 +64,17 @@ routes = [
 ]
 app = Starlette(routes=routes)
 
-if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=int(os.environ.get("PORT", 8000)))
+import asyncio
+
+async def main():
+    # Initialize the bot application before starting the web server
+    await application.initialize()
+    await application.start()
+    
+    # Start the web server
+    config = uvicorn.Config(app, host="0.0.0.0", port=int(os.environ.get("PORT", 8000)))
+    server = uvicorn.Server(config)
+    await server.serve()
+
+if _name_ == "_main_":
+    asyncio.run(main())
